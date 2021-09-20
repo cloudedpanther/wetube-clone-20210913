@@ -9,6 +9,10 @@ const PORT = 4000;
 const app = express();
 const logger = morgan("dev");
 
+// view settings
+app.set("view engine", "pug");
+app.set("views", process.cwd() + "/src/views");
+
 // middleware
 app.use(logger);
 
