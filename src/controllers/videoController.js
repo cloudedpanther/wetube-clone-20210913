@@ -1,4 +1,10 @@
-export const home = (req, res) => res.render("Home", { pageTitle: "Home" });
+const fakeUser = {
+  name: "dooley",
+  loggedIn: true,
+};
+
+export const home = (req, res) =>
+  res.render("Home", { pageTitle: "Home", fakeUser });
 export const search = (req, res) => res.send("Search");
 
 export const see = (req, res) =>
