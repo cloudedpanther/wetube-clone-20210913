@@ -1,1 +1,9 @@
 extends layouts
+include mixins/videoInfo
+
+block content
+    ul        
+        each video in videos
+            +videoInfo(video)
+        else
+            h3 Sorry, nothing found.
