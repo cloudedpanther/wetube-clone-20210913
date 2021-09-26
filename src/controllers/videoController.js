@@ -24,5 +24,23 @@ export const postEdit = (req, res) => {
   const { title } = req.body;
   return res.redirect(`/videos/${id}`);
 };
-export const upload = (req, res) => res.send("Upload Video");
+export const getUpload = (req, res) => {
+  return res.render("upload", { pageTitle: "Upload Video" });
+};
+export const postUpload = async (req, res) => {
+  const { title, description, hashtags } = req.body;
+  try {
+    await Video.create({
+      title,
+      description,
+      hashtags: hashtags.split(",").map((word) => `#${word}`),
+    });
+    return res.redirect("/");
+  } catch (error) {
+    return res.render("upload", {
+      pageTitle: "Upload Video",
+      errorMessage: error._message,
+    });
+  }
+};
 export const remove = (req, res) => res.send("Delete Video");
