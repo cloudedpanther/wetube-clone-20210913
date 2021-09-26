@@ -4,7 +4,7 @@ block content
     if errorMessage
         p=errorMessage
     form(method="POST")
-        input(name="title" type="text" placeholder="Title" required)
-        input(name="description" type="text" placeholder="Description" required)
+        input(name="title" type="text" placeholder="Title" maxlength=80 required)
+        input(name="description" type="text" placeholder="Description" minlength=20 required)
         input(name="hashtags" type="text" placeholder="Hashtags, seperated by comma" required)
         input(type="submit" value="Upload")
