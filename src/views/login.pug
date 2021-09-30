@@ -1,0 +1,13 @@
+extends templates/layout
+
+block content
+    if errorMessage 
+        p=errorMessage
+    form(method="POST")
+        input(name="userName" type="text" placeholder="User Name" required)
+        input(name="password" type="password" placeholder="Password" required)
+        input(type="submit" value="Log In")
+    hr
+    div
+        span Don't have an account? 
+        a(href="/join") Create one now &rarr;
