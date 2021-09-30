@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/cloudedpanther/wetube-clone-20210913#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "express": "^4.17.1",
     "mongoose": "^6.0.7",
     "morgan": "^1.10.0",
