@@ -2,19 +2,29 @@ import User from "../models/User";
 
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
 export const postJoin = async (req, res) => {
-  const { userName, email, password, name, location } = req.body;
-  try {
-    await User.create({
-      userName,
-      email,
-      password,
-      name,
-      location,
+  const { userName, email, password, passwordConfirm, name, location } =
+    req.body;
+  const exists = await User.exists({ $or: [{ userName }, { email }] });
+  if (password !== passwordConfirm) {
+    return res.render("join", {
+      pageTitle: "Join",
+      errorMessage: "Password confirmation does not match.",
     });
-    res.redirect("/login");
-  } catch (error) {
-    res.render("join", { pageTitle: "Join", errorMessage: error._message });
   }
+  if (exists) {
+    return res.render("join", {
+      pageTitle: "Join",
+      errorMessage: "This username or email is already taken.",
+    });
+  }
+  await User.create({
+    userName,
+    email,
+    password,
+    name,
+    location,
+  });
+  res.redirect("/login");
 };
 
 export const login = (req, res) => res.send("Log-In");
