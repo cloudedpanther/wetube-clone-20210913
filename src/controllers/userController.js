@@ -47,6 +47,7 @@ export const postLogin = async (req, res) => {
       errorMessage: "An account with this username doesn't exists.",
     });
   }
+  console.log("HI");
   const passwordMatch = bcrypt.compare(password, user.password);
   if (!passwordMatch) {
     return res.status(400).render("login", {
@@ -54,7 +55,10 @@ export const postLogin = async (req, res) => {
       errorMessage: "You got the wrong password.",
     });
   }
-  return res.rendirect("/");
+  console.log("My Name is");
+  req.session.loggedIn = true;
+  req.session.user = user;
+  return res.redirect("/");
 };
 
 export const edit = (req, res) => res.send("Edit User");
