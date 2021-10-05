@@ -41,7 +41,7 @@ export const getLogin = (req, res) =>
 export const postLogin = async (req, res) => {
   const { userName, password } = req.body;
   const pageTitle = "Log In";
-  const user = await User.findOne({ userName });
+  const user = await User.findOne({ userName, socialOnly: false });
   if (!user) {
     return res.status(400).render("login", {
       pageTitle,
@@ -61,9 +61,11 @@ export const postLogin = async (req, res) => {
 };
 
 export const edit = (req, res) => res.send("Edit User");
-export const remove = (req, res) => res.send("Remove User");
 export const see = (req, res) => res.send("See User");
-export const logout = (req, res) => res.send("Log-Out");
+export const logout = (req, res) => {
+  req.session.destroy();
+  res.redirect("/");
+};
 
 export const startGithubLogin = (req, res) => {
   const baseUrl = "https://github.com/login/oauth/authorize";
@@ -104,6 +106,7 @@ export const finishGithubLogin = async (req, res) => {
         },
       })
     ).json();
+    console.log(userData);
     const emailData = await (
       await fetch(`${apiUrl}/user/emails`, {
         headers: {
@@ -114,25 +117,22 @@ export const finishGithubLogin = async (req, res) => {
     const emailObj = emailData.find(
       (email) => email.primary === true && email.verified === true
     );
-    const existingUser = await User.findOne({ email: emailObj.email });
     if (!emailObj) return res.redirect("/login");
-    if (existingUser) {
-      req.session.loggedIn = true;
-      req.session.user = existingUser;
-      return res.redirect("/");
-    } else {
-      const user = await User.create({
+    let user = await User.findOne({ email: emailObj.email });
+    if (!user) {
+      user = await User.create({
         userName: userData.login,
         email: emailObj.email,
+        avatarUrl: userData.avatar_url,
         socialOnly: true,
         password: "",
         name: userData.name ? userData.name : "",
         location: userData.location ? userData.location : "",
       });
-      req.session.loggedIn = true;
-      req.session.user = user;
-      return res.redirect("/");
     }
+    req.session.loggedIn = true;
+    req.session.user = user;
+    return res.redirect("/");
   } else {
     return res.redirect("/login");
   }
