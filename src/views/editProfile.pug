@@ -1,9 +1,14 @@
 extends templates/layout
 
 block content
+    if errorMessage 
+        p=errorMessage
     form(method="POST")
         input(name="name" type="text" placeholder="Name" value=user.name required)
         input(name="email" type="email" placeholder="E-Mail" value=user.email required)
         input(name="userName" type="text" placeholder="User Name" value=user.userName required)
         input(name="location" type="text" placeholder="Location" value=user.location required)
         input(type="submit" value="Update Profile")
+        if !user.socialOnly
+            hr
+            a(href="change-password") Change Password &rarr;
