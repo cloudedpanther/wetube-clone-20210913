@@ -3,7 +3,10 @@ extends templates/layout
 block content
     if errorMessage 
         p=errorMessage
-    form(method="POST")
+    img(src="/" + user.avatarUrl width="100" height="100")
+    form(method="POST" enctype="multipart/form-data")
+        label(for="avatar") Avatar
+        input(name="avatar" type="file" id="avatar" accept="image/*")
         input(name="name" type="text" placeholder="Name" value=user.name required)
         input(name="email" type="email" placeholder="E-Mail" value=user.email required)
         input(name="userName" type="text" placeholder="User Name" value=user.userName required)

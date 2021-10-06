@@ -3,7 +3,9 @@ extends templates/layout
 block content 
     if errorMessage
         p=errorMessage
-    form(method="POST")
+    form(method="POST" enctype="multipart/form-data")
+        label(for="video") Video File
+        input(name="video" id="video" type="file" accept="video/*" required)
         input(name="title" type="text" placeholder="Title" maxlength=80 required)
         input(name="description" type="text" placeholder="Description" minlength=20 required)
         input(name="hashtags" type="text" placeholder="Hashtags, seperated by comma" required)

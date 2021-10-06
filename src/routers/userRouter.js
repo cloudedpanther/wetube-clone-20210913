@@ -1,5 +1,10 @@
 import express from "express";
-import { protectorMiddleware, publicOnlyMiddleware } from "../middlewares";
+import {
+  avatarUpload,
+  protectorMiddleware,
+  publicOnlyMiddleware,
+  uploadFiles,
+} from "../middlewares";
 import {
   finishGithubLogin,
   getChangePassword,
@@ -14,7 +19,11 @@ import {
 const userRouter = express.Router();
 
 userRouter.get("/logout", protectorMiddleware, logout);
-userRouter.route("/edit").all(protectorMiddleware).get(getEdit).post(postEdit);
+userRouter
+  .route("/edit")
+  .all(protectorMiddleware)
+  .get(getEdit)
+  .post(avatarUpload.single("avatar"), postEdit);
 userRouter
   .route("/change-password")
   .all(protectorMiddleware)

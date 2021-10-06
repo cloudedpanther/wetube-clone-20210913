@@ -24,6 +24,7 @@ export const search = async (req, res) => {
 export const see = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id);
+  console.log(video);
   if (!video) return res.render("404", { pageTitle: "Video Not Found" });
   else return res.render("watch", { pageTitle: video.title, video });
 };
@@ -51,10 +52,12 @@ export const getUpload = (req, res) => {
   return res.render("upload", { pageTitle: "Upload Video" });
 };
 export const postUpload = async (req, res) => {
+  const { path: fileUrl } = req.file;
   const { title, description, hashtags } = req.body;
   try {
     await Video.create({
       title,
+      fileUrl,
       description,
       hashtags: Video.formatHashtags(hashtags),
     });
