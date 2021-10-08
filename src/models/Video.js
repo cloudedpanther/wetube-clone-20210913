@@ -10,6 +10,7 @@ const videoSchema = new mongoose.Schema({
     views: { type: Number, required: true, default: 0 },
     rating: { type: Number, required: true, default: 0 },
   },
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 videoSchema.static("formatHashtags", (hashtags) => {
@@ -18,9 +19,9 @@ videoSchema.static("formatHashtags", (hashtags) => {
     .map((word) => (word.startsWith("#") ? word : `#${word}`));
 });
 
-videoSchema.pre("save", function () {
-  this.hashtags = this.hashtags[0];
-});
+// videoSchema.pre("save", function () {
+//   this.hashtags = this.hashtags[0];
+// });
 
 const Video = mongoose.model("Video", videoSchema);
 
