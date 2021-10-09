@@ -3,7 +3,8 @@ include mixins/videoInfo
 
 block content
     ul        
-        each video in videos
-            +videoInfo(video)
-        else
-            h3 Sorry, nothing found.
+        div.video-grid
+            each video in videos
+                +videoInfo(video)
+            else
+                span.empty__message No videos found 

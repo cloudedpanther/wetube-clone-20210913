@@ -2,9 +2,12 @@ extends templates/layout
 include mixins/videoInfo
 
 block content
-    form
+    form.search__form
         input(type="text" placeholder="Search by title..." name="keyword")
-        input(type="submit" value="Search")
-    div 
+        button
+            i.fas.fa-search
+    div.video-grid
         each video in videos
             +videoInfo(video)
+        else
+            span.empty__message No videos found 
