@@ -1,0 +1,62 @@
+#videoContainer {
+  width: inherit;
+  video {
+    width: inherit;
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.videoControls {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  &.showing {
+    opacity: 1;
+  }
+  width: 95%;
+  padding: 15px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $bg;
+  bottom: 60px;
+  border-radius: 10px;
+  .videoControls__play {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    .videoControls__playBtn {
+      margin-right: 60px;
+      i {
+        font-size: 20px;
+        cursor: pointer;
+      }
+    }
+  }
+  .videoControls__timeline {
+    width: 60%;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  .videoControls__volume {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    .videoControls__volume-range {
+      cursor: pointer;
+    }
+    span {
+      margin-left: 10px;
+      i {
+        cursor: pointer;
+      }
+    }
+  }
+  .videoControls__full-screen {
+    i {
+      cursor: pointer;
+    }
+  }
+}
