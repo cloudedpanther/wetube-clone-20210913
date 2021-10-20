@@ -6,6 +6,7 @@ const actionBtn = document.getElementById("actionBtn");
 let stream;
 let recorder;
 let recordedFile;
+let recoderTimeOut;
 
 const files = {
   input: "recording.webm",
@@ -76,6 +77,7 @@ const handleStop = () => {
   actionBtn.removeEventListener("click", handleStop);
   actionBtn.addEventListener("click", handleDownload);
   recorder.stop();
+  clearTimeout(recoderTimeOut);
 };
 
 const handleStart = () => {
@@ -92,12 +94,18 @@ const handleStart = () => {
     video.play();
   };
   recorder.start();
+  recoderTimeOut = setTimeout(() => {
+    handleStop();
+  }, 5000);
 };
 
 const init = async () => {
   stream = await navigator.mediaDevices.getUserMedia({
     audio: false,
-    video: true,
+    video: {
+      width: 1024,
+      height: 576,
+    },
   });
   video.srcObject = stream;
   video.play();

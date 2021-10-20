@@ -60,22 +60,23 @@ export const getUpload = (req, res) => {
 };
 export const postUpload = async (req, res) => {
   const {
-    file: { path: fileUrl },
+    files: { video, thumb },
     body: { title, description, hashtags },
     session: {
       user: { _id },
     },
   } = req;
   try {
-    const video = await Video.create({
+    const newVideo = await Video.create({
       title,
-      fileUrl,
+      fileUrl: Video.changePathFormula(video[0].path),
+      thumbUrl: Video.changePathFormula(thumb[0].path),
       owner: _id,
       description,
       hashtags: Video.formatHashtags(hashtags),
     });
-    const user = await User.findById(video.owner);
-    user.videos.push(video._id);
+    const user = await User.findById(newVideo.owner);
+    user.videos.push(newVideo._id);
     user.save();
     return res.redirect("/");
   } catch (error) {
