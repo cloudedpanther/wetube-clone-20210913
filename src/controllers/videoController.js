@@ -39,7 +39,11 @@ export const getEdit = async (req, res) => {
   } = req;
   const video = await Video.findById(id);
   if (!video) return res.render("404", { pageTitle: "Video Not Found" });
-  if (String(video.owner) !== String(_id)) return res.status(403).redirect("/");
+  if (String(video.owner) !== String(_id)) {
+    req.flash("error", "Not Authorized");
+    return res.status(403).redirect("/");
+  }
+  req.flash("success", "Video Updated");
   return res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
 };
 export const postEdit = async (req, res) => {
