@@ -134,13 +134,13 @@ export const createComment = async (req, res) => {
 
 export const deleteComment = async (req, res) => {
   const {
-    body: { commentId },
+    params: { id },
     session: { user },
   } = req;
-  const comment = await Comment.findById(commentId);
+  const comment = await Comment.findById(id);
   if (!comment) return res.render("404", { pageTitle: "Video Not Found" });
   if (String(comment.owner._id) !== String(user._id))
     return res.sendStatus(403);
-  await Comment.findByIdAndDelete(commentId);
+  await Comment.findByIdAndDelete(id);
   return res.sendStatus(201);
 };

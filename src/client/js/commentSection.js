@@ -6,14 +6,9 @@ const commentDeleteBtn = document.querySelectorAll(".comment__delete");
 const handleCommentDelete = async (event) => {
   event.preventDefault();
   const comment = event.target.parentNode;
-  const { id: videoId } = videoContainer.dataset;
-  const { id: commentId } = comment.dataset;
-  await fetch(`/api/videos/${videoId}/comment/delete`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ commentId }),
+  const { id } = comment.dataset;
+  await fetch(`/api/comments/${id}`, {
+    method: "DELETE",
   });
   videoComments.removeChild(comment);
 };

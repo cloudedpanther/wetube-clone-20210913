@@ -9,6 +9,6 @@ const apiRouter = express.Router();
 
 apiRouter.post("/videos/:id([0-9a-z]{24})/view", registerView);
 apiRouter.post("/videos/:id([0-9a-z]{24})/comment", createComment);
-apiRouter.post("/videos/:id([0-9a-z]{24})/comment/delete", deleteComment);
+apiRouter.post("/comments/:id([0-9a-z]{24})", deleteComment);
 
 export default apiRouter;
