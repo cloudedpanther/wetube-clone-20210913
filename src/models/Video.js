@@ -23,14 +23,6 @@ videoSchema.static("formatHashtags", (hashtags) => {
     .map((word) => (word.startsWith("#") ? word : `#${word}`));
 });
 
-videoSchema.static("changePathFormula", (urlPath) => {
-  return urlPath.replace(/\\/g, "/");
-});
-
-// videoSchema.pre("save", function () {
-//   this.hashtags = this.hashtags[0];
-// });
-
 const Video = mongoose.model("Video", videoSchema);
 
 export default Video;
