@@ -153,8 +153,8 @@ export const see = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  req.session.destroy();
   req.flash("info", "Logged out safely");
+  req.session.destroy();
   res.redirect("/");
 };
 
