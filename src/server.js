@@ -33,12 +33,7 @@ app.use(
 app.use(flash());
 app.use(localsMiddleware);
 
-// routers
-// app.use((req, res, next) => {
-//   res.header("Cross-Origin-Embedder-Policy", "require-corp");
-//   res.header("Cross-Origin-Opener-Policy", "same-origin");
-//   next();
-// });
+// roeters
 app.use("/", globalRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
